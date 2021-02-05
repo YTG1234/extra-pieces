@@ -14,8 +14,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class ModTags {
+import static com.shnupbups.extrapieces.EPUtilities.*;
 
+public class EPTags {
 	public static void init(ArtificeResourcePack.ServerResourcePackBuilder data) {
 		HashMap<PieceType, HashSet<Identifier>> map = new HashMap<>();
 
@@ -44,7 +45,7 @@ public class ModTags {
 				tag.values(identifiers.toArray(new Identifier[0]));
 			});
 
-			ExtraPieces.debugLog("Added block and item tags for " + type.toString() + ", " + identifiers.size() + " entries.");
+			debugLog("Added block and item tags for " + type + ", " + identifiers.size() + " entries.");
 		}
 	}
 }

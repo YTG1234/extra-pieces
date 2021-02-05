@@ -28,7 +28,7 @@ public class CornerPiece extends PieceType {
 		return recipes;
 	}
 
-	public void addBlockstate(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
+	public void addBlockState(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
 		pack.addBlockState(Registry.BLOCK.getId(pb.getBlock()), state -> {
 			for (Direction d : Direction.values()) {
 				if (d != Direction.UP && d != Direction.DOWN) {

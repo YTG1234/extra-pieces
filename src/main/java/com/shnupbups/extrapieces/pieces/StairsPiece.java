@@ -1,6 +1,6 @@
 package com.shnupbups.extrapieces.pieces;
 
-import com.shnupbups.extrapieces.ExtraPieces;
+import com.shnupbups.extrapieces.EPUtilities;
 import com.shnupbups.extrapieces.blocks.PieceBlock;
 import com.shnupbups.extrapieces.blocks.StairsPieceBlock;
 import com.shnupbups.extrapieces.core.PieceSet;
@@ -41,7 +41,7 @@ public class StairsPiece extends PieceType {
 		addBlockModel(pack, pb, "outer");
 	}
 
-	public void addBlockstate(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
+	public void addBlockState(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
 		pack.addBlockState(Registry.BLOCK.getId(pb.getBlock()), state -> {
 			for (Direction d : Direction.values()) {
 				if (!(d.equals(Direction.DOWN) || d.equals(Direction.UP))) {
@@ -226,10 +226,10 @@ public class StairsPiece extends PieceType {
 				}
 			}
 			state.variant("facing=east,half=bottom,shape=straight", var -> {
-				var.model(ExtraPieces.prependToPath(Registry.BLOCK.getId(pb.getBlock()), "block/"));
+				var.model(EPUtilities.prependToPath(Registry.BLOCK.getId(pb.getBlock()), "block/"));
 			});
 			state.variant("facing=west,half=bottom,shape=straight", var -> {
-				var.model(ExtraPieces.prependToPath(Registry.BLOCK.getId(pb.getBlock()), "block/"));
+				var.model(EPUtilities.prependToPath(Registry.BLOCK.getId(pb.getBlock()), "block/"));
 				var.rotationY(180);
 				var.uvlock(true);
 			});

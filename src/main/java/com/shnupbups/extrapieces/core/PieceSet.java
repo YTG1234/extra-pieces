@@ -4,16 +4,15 @@ import blue.endless.jankson.JsonArray;
 import blue.endless.jankson.JsonElement;
 import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.JsonPrimitive;
-import com.shnupbups.extrapieces.ExtraPieces;
 import com.shnupbups.extrapieces.blocks.FakePieceBlock;
 import com.shnupbups.extrapieces.blocks.PieceBlock;
 import com.shnupbups.extrapieces.recipe.PieceRecipe;
 import com.shnupbups.extrapieces.recipe.StonecuttingPieceRecipe;
 import com.shnupbups.extrapieces.recipe.WoodmillingPieceRecipe;
-import com.shnupbups.extrapieces.register.ModConfigs;
-import com.shnupbups.extrapieces.register.ModItemGroups;
-import com.shnupbups.extrapieces.register.ModLootTables;
-import com.shnupbups.extrapieces.register.ModRecipes;
+import com.shnupbups.extrapieces.register.EPConfig;
+import com.shnupbups.extrapieces.register.EPItemGroups;
+import com.shnupbups.extrapieces.register.EPLootTables;
+import com.shnupbups.extrapieces.register.EPRecipes;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -30,6 +29,8 @@ import net.minecraft.util.Language;
 import net.minecraft.util.registry.Registry;
 
 import java.util.*;
+
+import static com.shnupbups.extrapieces.EPUtilities.*;
 
 public class PieceSet {
 	public static final HashSet<PieceType> NO_SLAB;
@@ -88,7 +89,7 @@ public class PieceSet {
 	}
 
 	PieceSet(Block base, String name, Collection<PieceType> types, boolean isDefault) {
-		if (base == Blocks.AIR) ExtraPieces.log("PieceSet " + name + " has air as its base! This is VERY BAD!");
+		if (base == Blocks.AIR) log("PieceSet " + name + " has air as its base! This is VERY BAD!");
 		this.base = base;
 		this.originalName = name.toLowerCase();
 		this.name = PieceSets.getNewSetName(originalName);
@@ -302,7 +303,7 @@ public class PieceSet {
 
 			Registry.register(Registry.BLOCK, id, block.getBlock());
 
-			if (this.getBase() != Blocks.AIR) ModItemGroups.getItemGroup(block);
+			if (this.getBase() != Blocks.AIR) EPItemGroups.getItemGroup(block);
 
 			BlockItem item = type.getBlockItem(block);
 			item.appendBlocks(Item.BLOCK_ITEMS, item);
@@ -508,46 +509,46 @@ public class PieceSet {
 				for (PieceRecipe pr : pb.getType().getCraftingRecipes()) {
 					if (pr.canAddForSet(this)) {
 						Identifier bid = Registry.BLOCK.getId(pb.getBlock());
-						if(!ModRecipes.checkIsAir(bid, this)) {
-							Identifier id = ExtraPieces.getID(bid.getPath() + "_" + (i++));
+						if(!EPRecipes.checkIsAir(bid, this)) {
+							Identifier id = getID(bid.getPath() + "_" + (i++));
 							pr.add(data, id, this);
-							ModRecipes.incrementRecipes();
+							EPRecipes.incrementRecipes();
 						}
 					}
 				}
 
 			}
-			if (!isVanillaPiece(pb.getType()) && pb.getType() != PieceTypes.BASE && (isStonecuttable() || ModConfigs.everythingStonecuttable)) {
+			if (!isVanillaPiece(pb.getType()) && pb.getType() != PieceTypes.BASE && (isStonecuttable() || EPConfig.everythingStonecuttable)) {
 				Identifier bid = Registry.BLOCK.getId(pb.getBlock());
-				if(!ModRecipes.checkIsAir(bid, this)) {
-					Identifier id = ExtraPieces.getID(bid.getPath() + "_stonecutting");
+				if(!EPRecipes.checkIsAir(bid, this)) {
+					Identifier id = getID(bid.getPath() + "_stonecutting");
 					StonecuttingPieceRecipe r = pb.getType().getStonecuttingRecipe();
 					if (r != null) {
 						r.add(data, id, this);
-						ModRecipes.incrementStonecuttingRecipes();
+						EPRecipes.incrementStonecuttingRecipes();
 					}
 				}
 			}
-			if (ExtraPieces.isWoodmillInstalled() && !isVanillaPiece(pb.getType()) && pb.getType() != PieceTypes.BASE && isWoodmillable()) {
+			if (isWoodmillInstalled() && !isVanillaPiece(pb.getType()) && pb.getType() != PieceTypes.BASE && isWoodmillable()) {
 				Identifier bid = Registry.BLOCK.getId(pb.getBlock());
-				if(!ModRecipes.checkIsAir(bid, this)) {
-					Identifier id = ExtraPieces.getID(bid.getPath() + "_woodmilling");
+				if(!EPRecipes.checkIsAir(bid, this)) {
+					Identifier id = getID(bid.getPath() + "_woodmilling");
 					WoodmillingPieceRecipe r = pb.getType().getWoodmillingRecipe();
 					if (r != null) {
 						r.add(data, id, this);
-						ModRecipes.incrementWoodmillingRecipes();
+						EPRecipes.incrementWoodmillingRecipes();
 					}
 				}
 			}
 		}
-		ModRecipes.addMiscRecipes(data, this);
+		EPRecipes.addMiscRecipes(data, this);
 	}
 
 	public void addLootTables(ArtificeResourcePack.ServerResourcePackBuilder data) {
 		for (PieceBlock pb : this.getPieceBlocks()) {
 			if (!isVanillaPiece(pb.getType())) {
 				pb.getType().addLootTable(data, pb);
-				ModLootTables.incrementLootTables();
+				EPLootTables.incrementLootTables();
 			}
 		}
 	}

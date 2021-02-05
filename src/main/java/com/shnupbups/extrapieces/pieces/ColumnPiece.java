@@ -18,7 +18,7 @@ public class ColumnPiece extends PieceType {
 		return new ColumnPieceBlock(set);
 	}
 
-	public void addBlockstate(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
+	public void addBlockState(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
 		pack.addBlockState(Registry.BLOCK.getId(pb.getBlock()), state -> {
 			for (Direction.Axis a : Direction.Axis.values()) {
 				state.variant("axis=" + a.asString(), var -> {

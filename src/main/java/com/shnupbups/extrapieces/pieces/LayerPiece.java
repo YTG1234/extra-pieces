@@ -1,6 +1,6 @@
 package com.shnupbups.extrapieces.pieces;
 
-import com.shnupbups.extrapieces.ExtraPieces;
+import com.shnupbups.extrapieces.EPUtilities;
 import com.shnupbups.extrapieces.blocks.LayerPieceBlock;
 import com.shnupbups.extrapieces.blocks.PieceBlock;
 import com.shnupbups.extrapieces.core.PieceSet;
@@ -46,7 +46,7 @@ public class LayerPiece extends PieceType {
 		});
 	}
 
-	public void addBlockstate(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
+	public void addBlockState(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
 		pack.addBlockState(Registry.BLOCK.getId(pb.getBlock()), state -> {
 			for(Direction dir : Direction.values()) {
 				for (int i = 1; i <= 8; i++) {
@@ -85,7 +85,7 @@ public class LayerPiece extends PieceType {
 
 	@Override
 	public void addLootTable(ArtificeResourcePack.ServerResourcePackBuilder data, PieceBlock pb) {
-		data.addLootTable(ExtraPieces.prependToPath(Registry.BLOCK.getId(pb.getBlock()), "blocks/"), loot -> {
+		data.addLootTable(EPUtilities.prependToPath(Registry.BLOCK.getId(pb.getBlock()), "blocks/"), loot -> {
 			loot.type(new Identifier("block"));
 			loot.pool(pool -> {
 				pool.rolls(1);

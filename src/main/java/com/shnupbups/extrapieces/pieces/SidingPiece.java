@@ -1,13 +1,13 @@
 package com.shnupbups.extrapieces.pieces;
 
-import com.shnupbups.extrapieces.ExtraPieces;
+import com.shnupbups.extrapieces.EPUtilities;
 import com.shnupbups.extrapieces.blocks.PieceBlock;
 import com.shnupbups.extrapieces.blocks.SidingPieceBlock;
 import com.shnupbups.extrapieces.core.PieceSet;
 import com.shnupbups.extrapieces.core.PieceType;
 import com.shnupbups.extrapieces.core.PieceTypes;
 import com.shnupbups.extrapieces.recipe.ShapedPieceRecipe;
-import com.shnupbups.extrapieces.register.ModProperties;
+import com.shnupbups.extrapieces.register.EPProperties;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -36,7 +36,7 @@ public class SidingPiece extends PieceType {
 
 	@Override
 	public void addLootTable(ArtificeResourcePack.ServerResourcePackBuilder data, PieceBlock pb) {
-		data.addLootTable(ExtraPieces.prependToPath(Registry.BLOCK.getId(pb.getBlock()), "blocks/"), loot -> {
+		data.addLootTable(EPUtilities.prependToPath(Registry.BLOCK.getId(pb.getBlock()), "blocks/"), loot -> {
 			loot.type(new Identifier("block"));
 			loot.pool(pool -> {
 				pool.rolls(1);
@@ -64,9 +64,9 @@ public class SidingPiece extends PieceType {
 		addBlockModel(pack, pb, "double");
 	}
 
-	public void addBlockstate(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
+	public void addBlockState(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
 		pack.addBlockState(Registry.BLOCK.getId(pb.getBlock()), state -> {
-			for (ModProperties.SidingType t : ModProperties.SidingType.values()) {
+			for (EPProperties.SidingType t : EPProperties.SidingType.values()) {
 				switch (t) {
 					case SINGLE:
 						for (Direction d : Direction.values()) {

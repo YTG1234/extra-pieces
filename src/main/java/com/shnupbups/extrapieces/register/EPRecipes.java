@@ -1,5 +1,6 @@
 package com.shnupbups.extrapieces.register;
 
+import com.shnupbups.extrapieces.EPUtilities;
 import com.shnupbups.extrapieces.ExtraPieces;
 import com.shnupbups.extrapieces.core.PieceSet;
 import com.shnupbups.extrapieces.core.PieceSets;
@@ -8,10 +9,12 @@ import com.shnupbups.extrapieces.recipe.PieceIngredient;
 import com.shnupbups.extrapieces.recipe.ShapedPieceRecipe;
 import com.shnupbups.extrapieces.recipe.ShapelessPieceRecipe;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import static com.shnupbups.extrapieces.EPUtilities.*;
+
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ModRecipes {
+public class EPRecipes {
 
 	public static final ShapedPieceRecipe STAIRS_TO_BASE = new ShapedPieceRecipe(PieceTypes.BASE, 4, "ss", "ss").addToKey('s', PieceTypes.STAIRS);
 	public static final ShapedPieceRecipe CORNERS_TO_BASE = new ShapedPieceRecipe(PieceTypes.BASE, 4, "ss", "ss").addToKey('s', PieceTypes.CORNER);
@@ -39,10 +42,10 @@ public class ModRecipes {
 		for (PieceSet ps : PieceSets.registry.values()) {
 			ps.addRecipes(data);
 		}
-		ExtraPieces.debugLog("Registered " + r + " crafting recipes!");
-		ExtraPieces.debugLog("Registered " + s + " stonecutting recipes!");
-		if (ExtraPieces.isWoodmillInstalled()) {
-			ExtraPieces.debugLog("Registered " + w + " woodmilling recipes!");
+		debugLog("Registered " + r + " crafting recipes!");
+		debugLog("Registered " + s + " stonecutting recipes!");
+		if (EPUtilities.isWoodmillInstalled()) {
+			debugLog("Registered " + w + " woodmilling recipes!");
 		}
 	}
 
@@ -50,7 +53,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.STAIRS)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.STAIRS));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				STAIRS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -58,7 +61,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.CORNER)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.CORNER));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				CORNERS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -66,13 +69,13 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.STAIRS) && ps.hasPiece(PieceTypes.CORNER)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.CORNER));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_stairs");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_stairs");
 				CORNER_TO_STAIRS.add(data, id, ps);
 				r++;
 			}
 			Identifier bid2 = Registry.BLOCK.getId(ps.getPiece(PieceTypes.STAIRS));
 			if (!checkIsAir(bid2, ps)) {
-				Identifier id2 = ExtraPieces.getID(bid2.getPath() + "_to_corner");
+				Identifier id2 = EPUtilities.getID(bid2.getPath() + "_to_corner");
 				STAIRS_TO_CORNER.add(data, id2, ps);
 				r++;
 			}
@@ -80,7 +83,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.WALL)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.WALL));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				WALLS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -88,7 +91,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.FENCE)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.FENCE));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				FENCES_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -96,7 +99,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.COLUMN)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.COLUMN));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				COLUMNS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -104,7 +107,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.POST)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.POST));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				POSTS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -112,7 +115,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.SLAB)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.SLAB));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				SLABS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -120,7 +123,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.SIDING)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.SIDING));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				SIDINGS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -128,7 +131,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.WALL)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.WALL));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				WALLS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -136,7 +139,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.LAYER)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.LAYER));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_base");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_base");
 				LAYERS_TO_BASE.add(data, id, ps);
 				r++;
 			}
@@ -144,7 +147,7 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.LAYER) && ps.hasPiece(PieceTypes.SLAB)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.LAYER));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_slab");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_slab");
 				LAYERS_TO_SLAB.add(data, id, ps);
 				r++;
 			}
@@ -152,13 +155,13 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.SLAB) && ps.hasPiece(PieceTypes.SIDING)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.SLAB));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_siding");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_siding");
 				SLAB_TO_SIDING.add(data, id, ps);
 				r++;
 			}
 			Identifier bid2 = Registry.BLOCK.getId(ps.getPiece(PieceTypes.SIDING));
 			if (!checkIsAir(bid2, ps)) {
-				Identifier id2 = ExtraPieces.getID(bid2.getPath() + "_to_slab");
+				Identifier id2 = EPUtilities.getID(bid2.getPath() + "_to_slab");
 				SIDING_TO_SLAB.add(data, id2, ps);
 				r++;
 			}
@@ -166,13 +169,13 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.FENCE) && ps.hasPiece(PieceTypes.POST)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.FENCE));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_post");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_post");
 				FENCE_TO_POST.add(data, id, ps);
 				r++;
 			}
 			Identifier bid2 = Registry.BLOCK.getId(ps.getPiece(PieceTypes.POST));
 			if (!checkIsAir(bid2, ps)) {
-				Identifier id2 = ExtraPieces.getID(bid2.getPath() + "_to_fence");
+				Identifier id2 = EPUtilities.getID(bid2.getPath() + "_to_fence");
 				POST_TO_FENCE.add(data, id2, ps);
 				r++;
 			}
@@ -180,13 +183,13 @@ public class ModRecipes {
 		if (ps.hasPiece(PieceTypes.WALL) && ps.hasPiece(PieceTypes.COLUMN)) {
 			Identifier bid = Registry.BLOCK.getId(ps.getPiece(PieceTypes.WALL));
 			if (!checkIsAir(bid, ps)) {
-				Identifier id = ExtraPieces.getID(bid.getPath() + "_to_column");
+				Identifier id = EPUtilities.getID(bid.getPath() + "_to_column");
 				WALL_TO_COLUMN.add(data, id, ps);
 				r++;
 			}
 			Identifier bid2 = Registry.BLOCK.getId(ps.getPiece(PieceTypes.COLUMN));
 			if (!checkIsAir(bid2, ps)) {
-				Identifier id2 = ExtraPieces.getID(bid2.getPath() + "_to_wall");
+				Identifier id2 = EPUtilities.getID(bid2.getPath() + "_to_wall");
 				COLUMN_TO_WALL.add(data, id2, ps);
 				r++;
 			}
@@ -195,7 +198,7 @@ public class ModRecipes {
 
 	public static boolean checkIsAir(Identifier bid, PieceSet ps) {
 		if (bid.getPath().equals("air")) {
-			ExtraPieces.debugLog("OH NO - " + ps);
+			debugLog("OH NO - " + ps);
 			return true;
 		}
 		return false;

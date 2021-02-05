@@ -1,25 +1,27 @@
 package com.shnupbups.extrapieces.register;
 
-import com.shnupbups.extrapieces.ExtraPieces;
-import com.shnupbups.extrapieces.api.EPInitializer;
-import com.shnupbups.extrapieces.core.PieceSet;
-import com.shnupbups.extrapieces.core.PieceSets;
-import com.shnupbups.extrapieces.core.PieceTypes;
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
-import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.function.BiConsumer;
 
+import com.shnupbups.extrapieces.api.EPInitializer;
+import com.shnupbups.extrapieces.core.PieceSet;
+import com.shnupbups.extrapieces.core.PieceSets;
+import com.shnupbups.extrapieces.core.PieceTypes;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import static com.shnupbups.extrapieces.EPUtilities.*;
+
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
+import net.minecraft.util.registry.Registry;
+
+import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
+import net.fabricmc.loader.api.FabricLoader;
+
 @SuppressWarnings("WeakerAccess")
-public class ModBlocks {
+public class EPBlocks {
 
 	public static HashMap<Identifier, PieceSet.Builder> setBuilders = new HashMap<>();
 	public static HashSet<PieceSet.Builder> primedBuilders = new HashSet<>();
@@ -211,47 +213,203 @@ public class ModBlocks {
 	static int built = 0;
 
 	public static void generateDefaultSets() {
-		PRISMARINE_PIECES = PieceSets.createDefaultSet(Blocks.PRISMARINE, "prismarine", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.PRISMARINE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.PRISMARINE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.PRISMARINE_WALL);
-		PRISMARINE_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.PRISMARINE_BRICKS, "prismarine_brick", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.PRISMARINE_BRICK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.PRISMARINE_BRICK_STAIRS);
-		DARK_PRISMARINE_PIECES = PieceSets.createDefaultSet(Blocks.DARK_PRISMARINE, "dark_prismarine", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.DARK_PRISMARINE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.DARK_PRISMARINE_STAIRS);
-		OAK_PIECES = PieceSets.createDefaultSet(Blocks.OAK_PLANKS, "oak", PieceSet.JUST_EXTRAS_AND_WALL).setUncraftable(PieceTypes.WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.OAK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.OAK_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.OAK_FENCE).addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.OAK_FENCE_GATE);
-		SPRUCE_PIECES = PieceSets.createDefaultSet(Blocks.SPRUCE_PLANKS, "spruce", PieceSet.JUST_EXTRAS_AND_WALL).setUncraftable(PieceTypes.WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.SPRUCE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.SPRUCE_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.SPRUCE_FENCE).addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.SPRUCE_FENCE_GATE);
-		BIRCH_PIECES = PieceSets.createDefaultSet(Blocks.BIRCH_PLANKS, "birch", PieceSet.JUST_EXTRAS_AND_WALL).setUncraftable(PieceTypes.WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.BIRCH_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.BIRCH_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.BIRCH_FENCE).addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.BIRCH_FENCE_GATE);
-		JUNGLE_PIECES = PieceSets.createDefaultSet(Blocks.JUNGLE_PLANKS, "jungle", PieceSet.JUST_EXTRAS_AND_WALL).setUncraftable(PieceTypes.WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.JUNGLE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.JUNGLE_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.JUNGLE_FENCE).addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.JUNGLE_FENCE_GATE);
-		ACACIA_PIECES = PieceSets.createDefaultSet(Blocks.ACACIA_PLANKS, "acacia", PieceSet.JUST_EXTRAS_AND_WALL).setUncraftable(PieceTypes.WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.ACACIA_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.ACACIA_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.ACACIA_FENCE).addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.ACACIA_FENCE_GATE);
-		DARK_OAK_PIECES = PieceSets.createDefaultSet(Blocks.DARK_OAK_PLANKS, "dark_oak", PieceSet.JUST_EXTRAS_AND_WALL).setUncraftable(PieceTypes.WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.DARK_OAK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.DARK_OAK_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.DARK_OAK_FENCE).addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.DARK_OAK_FENCE_GATE);
-		STONE_PIECES = PieceSets.createDefaultSet(Blocks.STONE, "stone", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.STONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.STONE_STAIRS);
-		SMOOTH_STONE_PIECES = PieceSets.createDefaultSet(Blocks.SMOOTH_STONE, "smooth_stone", PieceSet.NO_SLAB).addVanillaPiece(PieceTypes.SLAB, Blocks.SMOOTH_STONE_SLAB);
-		SANDSTONE_PIECES = PieceSets.createDefaultSet(Blocks.SANDSTONE, "sandstone", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.SANDSTONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.SANDSTONE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.SANDSTONE_WALL).setTopTexture("sandstone_top").setBottomTexture("sandstone_bottom");
-		CUT_SANDSTONE_PIECES = PieceSets.createDefaultSet(Blocks.CUT_SANDSTONE, "cut_sandstone", PieceSet.NO_SLAB).addVanillaPiece(PieceTypes.SLAB, Blocks.CUT_SANDSTONE_SLAB).setTopTexture("sandstone_top").setBottomTexture("sandstone_bottom");
-		PETRIFIED_OAK_PIECES = PieceSets.createDefaultSet(Blocks.PETRIFIED_OAK_SLAB, "petrified_oak", PieceTypes.SIDING).addVanillaPiece(PieceTypes.SLAB, Blocks.PETRIFIED_OAK_SLAB).setTexture("oak_planks").setUncraftable(PieceTypes.SIDING).setInclude();
-		COBBLESTONE_PIECES = PieceSets.createDefaultSet(Blocks.COBBLESTONE, "cobblestone", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.COBBLESTONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.COBBLESTONE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.COBBLESTONE_WALL);
-		BRICK_PIECES = PieceSets.createDefaultSet(Blocks.BRICKS, "brick", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.BRICK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.BRICK_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.BRICK_WALL);
-		STONE_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.STONE_BRICKS, "stone_brick", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.STONE_BRICK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.STONE_BRICK_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.STONE_BRICK_WALL);
-		NETHER_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.NETHER_BRICKS, "nether_brick", PieceSet.JUST_EXTRAS_AND_FENCE_GATE).addVanillaPiece(PieceTypes.SLAB, Blocks.NETHER_BRICK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.NETHER_BRICK_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.NETHER_BRICK_FENCE).addVanillaPiece(PieceTypes.WALL, Blocks.NETHER_BRICK_WALL);
-		QUARTZ_PIECES = PieceSets.createDefaultSet(Blocks.QUARTZ_BLOCK, "quartz", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.QUARTZ_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.QUARTZ_STAIRS).setTexture("quartz_block_side").setTopTexture("quartz_block_top");
-		RED_SANDSTONE_PIECES = PieceSets.createDefaultSet(Blocks.RED_SANDSTONE, "red_sandstone", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.RED_SANDSTONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.RED_SANDSTONE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.RED_SANDSTONE_WALL).setTopTexture("red_sandstone_top").setBottomTexture("red_sandstone_bottom");
-		CUT_RED_SANDSTONE_PIECES = PieceSets.createDefaultSet(Blocks.CUT_RED_SANDSTONE, "cut_red_sandstone", PieceSet.NO_SLAB).addVanillaPiece(PieceTypes.SLAB, Blocks.CUT_RED_SANDSTONE_SLAB).setTopTexture("red_sandstone_top").setBottomTexture("red_sandstone_bottom");
-		PURPUR_PIECES = PieceSets.createDefaultSet(Blocks.PURPUR_BLOCK, "purpur", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.PURPUR_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.PURPUR_STAIRS);
-		POLISHED_GRANITE_PIECES = PieceSets.createDefaultSet(Blocks.POLISHED_GRANITE, "polished_granite", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_GRANITE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_GRANITE_STAIRS);
-		SMOOTH_RED_SANDSTONE_PIECES = PieceSets.createDefaultSet(Blocks.SMOOTH_RED_SANDSTONE, "smooth_red_sandstone", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.SMOOTH_RED_SANDSTONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.SMOOTH_RED_SANDSTONE_STAIRS).setTexture("red_sandstone_top");
-		MOSSY_STONE_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.MOSSY_STONE_BRICKS, "mossy_stone_brick", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.MOSSY_STONE_BRICK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.MOSSY_STONE_BRICK_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.MOSSY_STONE_BRICK_WALL);
-		POLISHED_DIORITE_PIECES = PieceSets.createDefaultSet(Blocks.POLISHED_DIORITE, "polished_diorite", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_DIORITE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_DIORITE_STAIRS);
-		MOSSY_COBBLESTONE_PIECES = PieceSets.createDefaultSet(Blocks.MOSSY_COBBLESTONE, "mossy_cobblestone", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.MOSSY_COBBLESTONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.MOSSY_COBBLESTONE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.MOSSY_COBBLESTONE_WALL);
-		END_STONE_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.END_STONE_BRICKS, "end_stone_brick", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.END_STONE_BRICK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.END_STONE_BRICK_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.END_STONE_BRICK_WALL);
-		SMOOTH_SANDSTONE_PIECES = PieceSets.createDefaultSet(Blocks.SMOOTH_SANDSTONE, "smooth_sandstone", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.SMOOTH_SANDSTONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.SMOOTH_SANDSTONE_STAIRS).setTexture("sandstone_top");
-		SMOOTH_QUARTZ_PIECES = PieceSets.createDefaultSet(Blocks.SMOOTH_QUARTZ, "smooth_quartz", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.SMOOTH_QUARTZ_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.SMOOTH_QUARTZ_STAIRS).setTexture("quartz_block_bottom");
-		GRANITE_PIECES = PieceSets.createDefaultSet(Blocks.GRANITE, "granite", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.GRANITE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.GRANITE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.GRANITE_WALL);
-		ANDESITE_PIECES = PieceSets.createDefaultSet(Blocks.ANDESITE, "andesite", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.ANDESITE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.ANDESITE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.ANDESITE_WALL);
-		RED_NETHER_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.RED_NETHER_BRICKS, "red_nether_brick", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.RED_NETHER_BRICK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.RED_NETHER_BRICK_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.RED_NETHER_BRICK_WALL);
-		POLISHED_ANDESITE_PIECES = PieceSets.createDefaultSet(Blocks.POLISHED_ANDESITE, "polished_andesite", PieceSet.NO_SLAB_OR_STAIRS).addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_ANDESITE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_ANDESITE_STAIRS);
-		DIORITE_PIECES = PieceSets.createDefaultSet(Blocks.DIORITE, "diorite", PieceSet.NO_SLAB_STAIRS_OR_WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.DIORITE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.DIORITE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.DIORITE_WALL);
+		PRISMARINE_PIECES = PieceSets
+				.createDefaultSet(Blocks.PRISMARINE, "prismarine", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.PRISMARINE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.PRISMARINE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.PRISMARINE_WALL);
+		PRISMARINE_BRICK_PIECES = PieceSets
+				.createDefaultSet(Blocks.PRISMARINE_BRICKS, "prismarine_brick", PieceSet.NO_SLAB_OR_STAIRS)
+		 	    .addVanillaPiece(PieceTypes.SLAB, Blocks.PRISMARINE_BRICK_SLAB)
+		 	    .addVanillaPiece(PieceTypes.STAIRS, Blocks.PRISMARINE_BRICK_STAIRS);
+		DARK_PRISMARINE_PIECES = PieceSets
+				.createDefaultSet(Blocks.DARK_PRISMARINE, "dark_prismarine", PieceSet.NO_SLAB_OR_STAIRS)
+			    .addVanillaPiece(PieceTypes.SLAB, Blocks.DARK_PRISMARINE_SLAB)
+			    .addVanillaPiece(PieceTypes.STAIRS, Blocks.DARK_PRISMARINE_STAIRS);
+		OAK_PIECES = PieceSets
+				.createDefaultSet(Blocks.OAK_PLANKS, "oak", PieceSet.JUST_EXTRAS_AND_WALL)
+				.setUncraftable(PieceTypes.WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.OAK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.OAK_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.OAK_FENCE)
+				.addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.OAK_FENCE_GATE);
+		SPRUCE_PIECES = PieceSets
+				.createDefaultSet(Blocks.SPRUCE_PLANKS, "spruce", PieceSet.JUST_EXTRAS_AND_WALL)
+				.setUncraftable(PieceTypes.WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.SPRUCE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.SPRUCE_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.SPRUCE_FENCE)
+				.addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.SPRUCE_FENCE_GATE);
+		BIRCH_PIECES = PieceSets
+				.createDefaultSet(Blocks.BIRCH_PLANKS, "birch", PieceSet.JUST_EXTRAS_AND_WALL)
+				.setUncraftable(PieceTypes.WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.BIRCH_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.BIRCH_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.BIRCH_FENCE)
+				.addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.BIRCH_FENCE_GATE);
+		JUNGLE_PIECES = PieceSets
+				.createDefaultSet(Blocks.JUNGLE_PLANKS, "jungle", PieceSet.JUST_EXTRAS_AND_WALL)
+				.setUncraftable(PieceTypes.WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.JUNGLE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.JUNGLE_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.JUNGLE_FENCE)
+				.addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.JUNGLE_FENCE_GATE);
+		ACACIA_PIECES = PieceSets
+				.createDefaultSet(Blocks.ACACIA_PLANKS, "acacia", PieceSet.JUST_EXTRAS_AND_WALL)
+				.setUncraftable(PieceTypes.WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.ACACIA_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.ACACIA_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.ACACIA_FENCE)
+				.addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.ACACIA_FENCE_GATE);
+		DARK_OAK_PIECES = PieceSets
+				.createDefaultSet(Blocks.DARK_OAK_PLANKS, "dark_oak", PieceSet.JUST_EXTRAS_AND_WALL)
+				.setUncraftable(PieceTypes.WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.DARK_OAK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.DARK_OAK_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.DARK_OAK_FENCE)
+				.addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.DARK_OAK_FENCE_GATE);
+		STONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.STONE, "stone", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.STONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.STONE_STAIRS);
+		SMOOTH_STONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.SMOOTH_STONE, "smooth_stone", PieceSet.NO_SLAB)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.SMOOTH_STONE_SLAB);
+		SANDSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.SANDSTONE, "sandstone", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.SANDSTONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.SANDSTONE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.SANDSTONE_WALL)
+				.setTopTexture("sandstone_top")
+				.setBottomTexture("sandstone_bottom");
+		CUT_SANDSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.CUT_SANDSTONE, "cut_sandstone", PieceSet.NO_SLAB)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.CUT_SANDSTONE_SLAB)
+				.setTopTexture("sandstone_top")
+				.setBottomTexture("sandstone_bottom");
+		PETRIFIED_OAK_PIECES = PieceSets
+				.createDefaultSet(Blocks.PETRIFIED_OAK_SLAB, "petrified_oak", PieceTypes.SIDING)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.PETRIFIED_OAK_SLAB)
+				.setTexture("oak_planks")
+				.setUncraftable(PieceTypes.SIDING)
+				.setInclude();
+		COBBLESTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.COBBLESTONE, "cobblestone", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.COBBLESTONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.COBBLESTONE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.COBBLESTONE_WALL);
+		BRICK_PIECES = PieceSets
+				.createDefaultSet(Blocks.BRICKS, "brick", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.BRICK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.BRICK_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.BRICK_WALL);
+		STONE_BRICK_PIECES = PieceSets
+				.createDefaultSet(Blocks.STONE_BRICKS, "stone_brick", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.STONE_BRICK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.STONE_BRICK_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.STONE_BRICK_WALL);
+		NETHER_BRICK_PIECES = PieceSets
+				.createDefaultSet(Blocks.NETHER_BRICKS, "nether_brick", PieceSet.JUST_EXTRAS_AND_FENCE_GATE)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.NETHER_BRICK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.NETHER_BRICK_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.NETHER_BRICK_FENCE)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.NETHER_BRICK_WALL);
+		QUARTZ_PIECES = PieceSets
+				.createDefaultSet(Blocks.QUARTZ_BLOCK, "quartz", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.QUARTZ_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.QUARTZ_STAIRS)
+				.setTexture("quartz_block_side")
+				.setTopTexture("quartz_block_top");
+		RED_SANDSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.RED_SANDSTONE, "red_sandstone", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.RED_SANDSTONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.RED_SANDSTONE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.RED_SANDSTONE_WALL)
+				.setTopTexture("red_sandstone_top")
+				.setBottomTexture("red_sandstone_bottom");
+		CUT_RED_SANDSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.CUT_RED_SANDSTONE, "cut_red_sandstone", PieceSet.NO_SLAB)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.CUT_RED_SANDSTONE_SLAB)
+				.setTopTexture("red_sandstone_top")
+				.setBottomTexture("red_sandstone_bottom");
+		PURPUR_PIECES = PieceSets
+				.createDefaultSet(Blocks.PURPUR_BLOCK, "purpur", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.PURPUR_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.PURPUR_STAIRS);
+		POLISHED_GRANITE_PIECES = PieceSets
+				.createDefaultSet(Blocks.POLISHED_GRANITE, "polished_granite", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_GRANITE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_GRANITE_STAIRS);
+		SMOOTH_RED_SANDSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.SMOOTH_RED_SANDSTONE, "smooth_red_sandstone", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.SMOOTH_RED_SANDSTONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.SMOOTH_RED_SANDSTONE_STAIRS)
+				.setTexture("red_sandstone_top");
+		MOSSY_STONE_BRICK_PIECES = PieceSets
+				.createDefaultSet(Blocks.MOSSY_STONE_BRICKS, "mossy_stone_brick", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.MOSSY_STONE_BRICK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.MOSSY_STONE_BRICK_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.MOSSY_STONE_BRICK_WALL);
+		POLISHED_DIORITE_PIECES = PieceSets
+				.createDefaultSet(Blocks.POLISHED_DIORITE, "polished_diorite", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_DIORITE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_DIORITE_STAIRS);
+		MOSSY_COBBLESTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.MOSSY_COBBLESTONE, "mossy_cobblestone", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.MOSSY_COBBLESTONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.MOSSY_COBBLESTONE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.MOSSY_COBBLESTONE_WALL);
+		END_STONE_BRICK_PIECES = PieceSets
+				.createDefaultSet(Blocks.END_STONE_BRICKS, "end_stone_brick", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.END_STONE_BRICK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.END_STONE_BRICK_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.END_STONE_BRICK_WALL);
+		SMOOTH_SANDSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.SMOOTH_SANDSTONE, "smooth_sandstone", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.SMOOTH_SANDSTONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.SMOOTH_SANDSTONE_STAIRS)
+				.setTexture("sandstone_top");
+		SMOOTH_QUARTZ_PIECES = PieceSets
+				.createDefaultSet(Blocks.SMOOTH_QUARTZ, "smooth_quartz", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.SMOOTH_QUARTZ_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.SMOOTH_QUARTZ_STAIRS)
+				.setTexture("quartz_block_bottom");
+		GRANITE_PIECES = PieceSets
+				.createDefaultSet(Blocks.GRANITE, "granite", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.GRANITE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.GRANITE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.GRANITE_WALL);
+		ANDESITE_PIECES = PieceSets
+				.createDefaultSet(Blocks.ANDESITE, "andesite", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.ANDESITE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.ANDESITE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.ANDESITE_WALL);
+		RED_NETHER_BRICK_PIECES = PieceSets
+				.createDefaultSet(Blocks.RED_NETHER_BRICKS, "red_nether_brick", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.RED_NETHER_BRICK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.RED_NETHER_BRICK_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.RED_NETHER_BRICK_WALL);
+		POLISHED_ANDESITE_PIECES = PieceSets
+				.createDefaultSet(Blocks.POLISHED_ANDESITE, "polished_andesite", PieceSet.NO_SLAB_OR_STAIRS)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_ANDESITE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_ANDESITE_STAIRS);
+		DIORITE_PIECES = PieceSets
+				.createDefaultSet(Blocks.DIORITE, "diorite", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.DIORITE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.DIORITE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.DIORITE_WALL);
 		NETHERRACK_PIECES = PieceSets.createDefaultSet(Blocks.NETHERRACK, "netherrack");
 		END_STONE_PIECES = PieceSets.createDefaultSet(Blocks.END_STONE, "end_stone");
 		QUARTZ_PILLAR_PIECES = PieceSets.createDefaultSet(Blocks.QUARTZ_PILLAR, "quartz_pillar").setTopTexture("quartz_pillar_top");
 		CHISELED_QUARTZ_PIECES = PieceSets.createDefaultSet(Blocks.CHISELED_QUARTZ_BLOCK, "chiseled_quartz").setTopTexture("chiseled_quartz_block_top");
-		CHISELED_SANDSTONE_PIECES = PieceSets.createDefaultSet(Blocks.CHISELED_SANDSTONE, "chiseled_sandstone").setTopTexture("sandstone_top").setBottomTexture("sandstone_bottom");
-		CHISELED_RED_SANDSTONE_PIECES = PieceSets.createDefaultSet(Blocks.CHISELED_RED_SANDSTONE, "chiseled_red_sandstone").setTopTexture("red_sandstone_top").setBottomTexture("red_sandstone_bottom");
+		CHISELED_SANDSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.CHISELED_SANDSTONE, "chiseled_sandstone")
+				.setTopTexture("sandstone_top")
+				.setBottomTexture("sandstone_bottom");
+		CHISELED_RED_SANDSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.CHISELED_RED_SANDSTONE, "chiseled_red_sandstone")
+				.setTopTexture("red_sandstone_top")
+				.setBottomTexture("red_sandstone_bottom");
 		CRACKED_STONE_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.CRACKED_STONE_BRICKS, "cracked_stone_brick");
 		CHISELED_STONE_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.CHISELED_STONE_BRICKS, "chiseled_stone_brick");
 		PURPUR_PILLAR_PIECES = PieceSets.createDefaultSet(Blocks.PURPUR_PILLAR, "purpur_pillar").setTopTexture("purpur_pillar_top");
@@ -314,7 +472,11 @@ public class ModBlocks {
 		BLACK_WOOL_PIECES = PieceSets.createDefaultSet(Blocks.BLACK_WOOL, "black_wool");
 		OBSIDIAN_PIECES = PieceSets.createDefaultSet(Blocks.OBSIDIAN, "obsidian");
 		BONE_PIECES = PieceSets.createDefaultSet(Blocks.BONE_BLOCK, "bone").setTexture("bone_block_side").setTopTexture("bone_block_top");
-		SNOW_PIECES = PieceSets.createDefaultSet(Blocks.SNOW_BLOCK, "snow", PieceSet.NO_LAYER).setTexture("snow").setUncraftable(PieceTypes.SLAB).addVanillaPiece(PieceTypes.LAYER, Blocks.SNOW);
+		SNOW_PIECES = PieceSets
+				.createDefaultSet(Blocks.SNOW_BLOCK, "snow", PieceSet.NO_LAYER)
+				.setTexture("snow")
+				.setUncraftable(PieceTypes.SLAB)
+				.addVanillaPiece(PieceTypes.LAYER, Blocks.SNOW);
 		MAGMA_PIECES = PieceSets.createDefaultSet(Blocks.MAGMA_BLOCK, "magma").setTexture("magma");
 		GLOWSTONE_PIECES = PieceSets.createDefaultSet(Blocks.GLOWSTONE, "glowstone");
 		NETHER_WART_PIECES = PieceSets.createDefaultSet(Blocks.NETHER_WART_BLOCK, "nether_wart");
@@ -365,8 +527,20 @@ public class ModBlocks {
 		RED_STAINED_GLASS_PIECES = PieceSets.createDefaultSet(Blocks.RED_STAINED_GLASS, "red_stained_glass").setUncraftable(PieceTypes.WALL);
 		BLACK_STAINED_GLASS_PIECES = PieceSets.createDefaultSet(Blocks.BLACK_STAINED_GLASS, "black_stained_glass").setUncraftable(PieceTypes.WALL);
 
-		CRIMSON_PIECES = PieceSets.createDefaultSet(Blocks.CRIMSON_PLANKS, "crimson", PieceSet.JUST_EXTRAS_AND_WALL).setUncraftable(PieceTypes.WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.CRIMSON_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.CRIMSON_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.CRIMSON_FENCE).addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.CRIMSON_FENCE_GATE);
-		WARPED_PIECES = PieceSets.createDefaultSet(Blocks.WARPED_PLANKS, "warped", PieceSet.JUST_EXTRAS_AND_WALL).setUncraftable(PieceTypes.WALL).addVanillaPiece(PieceTypes.SLAB, Blocks.WARPED_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.WARPED_STAIRS).addVanillaPiece(PieceTypes.FENCE, Blocks.WARPED_FENCE).addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.WARPED_FENCE_GATE);
+		CRIMSON_PIECES = PieceSets
+				.createDefaultSet(Blocks.CRIMSON_PLANKS, "crimson", PieceSet.JUST_EXTRAS_AND_WALL)
+				.setUncraftable(PieceTypes.WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.CRIMSON_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.CRIMSON_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.CRIMSON_FENCE)
+				.addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.CRIMSON_FENCE_GATE);
+		WARPED_PIECES = PieceSets
+				.createDefaultSet(Blocks.WARPED_PLANKS, "warped", PieceSet.JUST_EXTRAS_AND_WALL)
+				.setUncraftable(PieceTypes.WALL)
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.WARPED_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.WARPED_STAIRS)
+				.addVanillaPiece(PieceTypes.FENCE, Blocks.WARPED_FENCE)
+				.addVanillaPiece(PieceTypes.FENCE_GATE, Blocks.WARPED_FENCE_GATE);
 		CRIMSON_STEM_PIECES = PieceSets.createDefaultSet(Blocks.CRIMSON_STEM, "crimson_stem").setTopTexture("crimson_stem_top");
 		WARPED_STEM_PIECES = PieceSets.createDefaultSet(Blocks.WARPED_STEM, "warped_stem").setTopTexture("warped_stem_top");
 		STRIPPED_CRIMSON_STEM_PIECES = PieceSets.createDefaultSet(Blocks.STRIPPED_CRIMSON_STEM, "stripped_crimson_stem").setTopTexture("stripped_crimson_stem_top");
@@ -377,11 +551,27 @@ public class ModBlocks {
 		STRIPPED_WARPED_HYPHAE_PIECES = PieceSets.createDefaultSet(Blocks.STRIPPED_WARPED_HYPHAE, "stripped_warped_hyphae").setTexture("stripped_warped_stem");
 		HONEYCOMB_PIECES = PieceSets.createDefaultSet(Blocks.HONEYCOMB_BLOCK, "honeycomb");
 		BASALT_PIECES = PieceSets.createDefaultSet(Blocks.BASALT, "basalt").setTexture("basalt_side").setTopTexture("basalt_top");
-		POLISHED_BASALT_PIECES = PieceSets.createDefaultSet(Blocks.POLISHED_BASALT, "polished_basalt").setTexture("polished_basalt_side").setTopTexture("polished_basalt_top");
-		BLACKSTONE_PIECES = PieceSets.createDefaultSet(Blocks.BLACKSTONE, "blackstone", PieceSet.NO_SLAB_STAIRS_OR_WALL).setTopTexture("blackstone_top").addVanillaPiece(PieceTypes.SLAB, Blocks.BLACKSTONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.BLACKSTONE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.BLACKSTONE_WALL);
-		POLISHED_BLACKSTONE_PIECES = PieceSets.createDefaultSet(Blocks.POLISHED_BLACKSTONE, "polished_blackstone").addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_BLACKSTONE_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_BLACKSTONE_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.POLISHED_BLACKSTONE_WALL);
+		POLISHED_BASALT_PIECES = PieceSets
+				.createDefaultSet(Blocks.POLISHED_BASALT, "polished_basalt")
+				.setTexture("polished_basalt_side")
+				.setTopTexture("polished_basalt_top");
+		BLACKSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.BLACKSTONE, "blackstone", PieceSet.NO_SLAB_STAIRS_OR_WALL)
+				.setTopTexture("blackstone_top")
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.BLACKSTONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.BLACKSTONE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.BLACKSTONE_WALL);
+		POLISHED_BLACKSTONE_PIECES = PieceSets
+				.createDefaultSet(Blocks.POLISHED_BLACKSTONE, "polished_blackstone")
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_BLACKSTONE_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_BLACKSTONE_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.POLISHED_BLACKSTONE_WALL);
 		CHISELED_POLISHED_BLACKSTONE_PIECES = PieceSets.createDefaultSet(Blocks.CHISELED_POLISHED_BLACKSTONE, "chiseled_polished_blackstone");
-		POLISHED_BLACKSTONE_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.POLISHED_BLACKSTONE_BRICKS, "polished_blackstone_brick").addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_BLACKSTONE_BRICK_SLAB).addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_BLACKSTONE_BRICK_STAIRS).addVanillaPiece(PieceTypes.WALL, Blocks.POLISHED_BLACKSTONE_BRICK_WALL);
+		POLISHED_BLACKSTONE_BRICK_PIECES = PieceSets
+				.createDefaultSet(Blocks.POLISHED_BLACKSTONE_BRICKS, "polished_blackstone_brick")
+				.addVanillaPiece(PieceTypes.SLAB, Blocks.POLISHED_BLACKSTONE_BRICK_SLAB)
+				.addVanillaPiece(PieceTypes.STAIRS, Blocks.POLISHED_BLACKSTONE_BRICK_STAIRS)
+				.addVanillaPiece(PieceTypes.WALL, Blocks.POLISHED_BLACKSTONE_BRICK_WALL);
 		CRACKED_POLISHED_BLACKSTONE_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS, "cracked_polished_blackstone_brick");
 		NETHERITE_PIECES = PieceSets.createDefaultSet(Blocks.NETHERITE_BLOCK, "netherite");
 		CHISELED_NETHER_BRICK_PIECES = PieceSets.createDefaultSet(Blocks.CHISELED_NETHER_BRICKS, "chiseled_nether_brick");
@@ -393,7 +583,7 @@ public class ModBlocks {
 		SOUL_SOIL_PIECES = PieceSets.createDefaultSet(Blocks.SOUL_SOIL, "soul_soil");
 		WARPED_WART_PIECES = PieceSets.createDefaultSet(Blocks.WARPED_WART_BLOCK, "warped_wart");
 
-		ExtraPieces.debugLog("Generated Default Sets");
+		debugLog("Generated Default Sets");
 	}
 
 	public static void registerSet(PieceSet.Builder psb) {
@@ -405,7 +595,7 @@ public class ModBlocks {
 			}
 			setBuilders.put(psb.getBaseID(), psb);
 		} else {
-			ExtraPieces.debugLog("Piece Pack " + psb.packName + " tried to register a set for " + psb.getBaseID() + " when one already exists! Skipping...");
+			debugLog("Piece Pack " + psb.packName + " tried to register a set for " + psb.getBaseID() + " when one already exists! Skipping...");
 		}
 	}
 
@@ -427,8 +617,8 @@ public class ModBlocks {
 					builder = primed.next();
 
 					if (!builder.isBuilt() && builder.isReady()) {
-						ExtraPieces.moreDebugLog("Block "+id.toString()+" registered, triggering a PSB.");
-						ExtraPieces.debugLog("Deferred PieceSet Builder" + builder + " now ready! Building...");
+						moreDebugLog("Block " + id.toString() + " registered, triggering a PSB.");
+						debugLog("Deferred PieceSet Builder" + builder + " now ready! Building...");
 						builder.build().register(data);
 						primed.remove();
 					}
@@ -440,15 +630,15 @@ public class ModBlocks {
 					if (current.isReady()) {
 						current.build().register(data);
 					} else {
-						ExtraPieces.debugLog("PieceSet Builder" + current + " not yet ready! Deferring to delayed build...");
+						debugLog("PieceSet Builder" + current + " not yet ready! Deferring to delayed build...");
 						primedBuilders.add(setBuilders.get(id));
 					}
 				}
 
 				if (!finished && isDone()) {
-					ExtraPieces.debugLog("Done! All sets built!");
+					debugLog("Done! All sets built!");
 					finish(data);
-					ExtraPieces.debugLog("Registered all PieceSets!");
+					debugLog("Registered all PieceSets!");
 				}
 			}
 		});
@@ -467,29 +657,21 @@ public class ModBlocks {
 				}
 
 				if (!finished && isDone()) {
-					ExtraPieces.debugLog("Done! All sets built!");
+					debugLog("Done! All sets built!");
 					finish(data);
-					ExtraPieces.debugLog("Registered all PieceSets!");
+					debugLog("Registered all PieceSets!");
 				}
 			}
 		});
 	}
 
-	public static void finish(ArtificeResourcePack.ServerResourcePackBuilder data) {
-		ModRecipes.init(data);
-		ModLootTables.init(data);
-		ModTags.init(data);
-		FabricLoader.getInstance().getEntrypoints("extrapieces", EPInitializer.class).forEach(api -> {
-			api.addData(data);
-		});
-
-		ModBlocks.finished = true;
-
-		ExtraPieces.dump();
+	public static <T> void visitRegistry(Registry<T> registry, BiConsumer<Identifier, T> visitor) {
+		registry.getIds().forEach(id -> visitor.accept(id, registry.get(id)));
+		RegistryEntryAddedCallback.event(registry).register((index, identifier, entry) -> visitor.accept(identifier, entry));
 	}
 
 	public static boolean isDone() {
-		if (ModBlocks.finished) return true;
+		if (EPBlocks.finished) return true;
 		boolean done = primedBuilders.isEmpty();
 
 		if (done) {
@@ -497,19 +679,27 @@ public class ModBlocks {
 			for (PieceSet.Builder psb : setBuilders.values()) {
 				if (!psb.isBuilt()) {
 					done = false;
-				} else built++;
+				} else {
+					built++;
+				}
 			}
-			if (built != ModBlocks.built) {
-				ExtraPieces.moreDebugLog("Built "+built+"/"+setBuilders.size());
-				ModBlocks.built = built;
+			if (built != EPBlocks.built) {
+				moreDebugLog("Built " + built + "/" + setBuilders.size());
+				EPBlocks.built = built;
 			}
 		}
 
 		return done;
 	}
 
-	public static <T> void visitRegistry(Registry<T> registry, BiConsumer<Identifier, T> visitor) {
-		registry.getIds().forEach(id -> visitor.accept(id, registry.get(id)));
-		RegistryEntryAddedCallback.event(registry).register((index, identifier, entry) -> visitor.accept(identifier, entry));
+	public static void finish(ArtificeResourcePack.ServerResourcePackBuilder data) {
+		EPRecipes.init(data);
+		EPLootTables.init(data);
+		EPTags.init(data);
+		FabricLoader.getInstance().getEntrypoints("extrapieces", EPInitializer.class).forEach(api -> api.addData(data));
+
+		EPBlocks.finished = true;
+
+		dump(data);
 	}
 }

@@ -14,6 +14,8 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.Optional;
 
+import static com.shnupbups.extrapieces.EPUtilities.*;
+
 public class PieceIngredient {
 	public final PIType type;
 	private Identifier id;
@@ -35,7 +37,7 @@ public class PieceIngredient {
 
 	public Identifier getId(PieceSet set) {
 		if ((type == PIType.PIECE) && set.getPiece(getPieceType()).equals(Items.AIR)) {
-			ExtraPieces.log("Attempted to get type " + id.toString() + " from set " + set.getName() + " for a recipe, but got air! This is not good!");
+			log("Attempted to get type " + id.toString() + " from set " + set.getName() + " for a recipe, but got air! This is not good!");
 		}
 		switch (type) {
 			case ITEM:

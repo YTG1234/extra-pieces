@@ -3,7 +3,7 @@ package com.shnupbups.extrapieces.debug;
 import com.shnupbups.extrapieces.blocks.PieceBlock;
 import com.shnupbups.extrapieces.core.PieceSet;
 import com.shnupbups.extrapieces.core.PieceSets;
-import com.shnupbups.extrapieces.register.ModBlocks;
+import com.shnupbups.extrapieces.register.EPBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -48,8 +48,8 @@ public class DebugItem extends Item {
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 		if (!world.isClient()) {
-			if (ModBlocks.setBuilders.size() != PieceSets.registry.size()) {
-				for (PieceSet.Builder psb : ModBlocks.setBuilders.values()) {
+			if (EPBlocks.setBuilders.size() != PieceSets.registry.size()) {
+				for (PieceSet.Builder psb : EPBlocks.setBuilders.values()) {
 					if (!psb.isBuilt())
 						player.sendMessage(new LiteralText("Errored Piece Set: " + psb.toString() + " Make sure the base and any vanilla pieces actually exist!"), false);
 				}

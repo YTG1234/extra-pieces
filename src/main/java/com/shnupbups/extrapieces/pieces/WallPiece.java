@@ -1,6 +1,6 @@
 package com.shnupbups.extrapieces.pieces;
 
-import com.shnupbups.extrapieces.ExtraPieces;
+import com.shnupbups.extrapieces.EPUtilities;
 import com.shnupbups.extrapieces.blocks.PieceBlock;
 import com.shnupbups.extrapieces.blocks.WallPieceBlock;
 import com.shnupbups.extrapieces.core.PieceSet;
@@ -42,11 +42,11 @@ public class WallPiece extends PieceType {
 
 	public void addItemModel(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
 		pack.addItemModel(Registry.BLOCK.getId(pb.getBlock()), model -> {
-			model.parent(ExtraPieces.prependToPath(ExtraPieces.appendToPath(Registry.BLOCK.getId(pb.getBlock()), "_inventory"), "block/"));
+			model.parent(EPUtilities.prependToPath(EPUtilities.appendToPath(Registry.BLOCK.getId(pb.getBlock()), "_inventory"), "block/"));
 		});
 	}
 
-	public void addBlockstate(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
+	public void addBlockState(ArtificeResourcePack.ClientResourcePackBuilder pack, PieceBlock pb) {
 		pack.addBlockState(Registry.BLOCK.getId(pb.getBlock()), state -> {
 			state.multipartCase(caze -> {
 				caze.when(Direction.UP.asString(), "true");

@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ModItemGroups {
+public class EPItemGroups {
 
 	public static final Map<PieceType, ItemGroup> groups = new HashMap<PieceType, ItemGroup>();
 

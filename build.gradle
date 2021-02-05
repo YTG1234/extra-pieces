@@ -1,6 +1,6 @@
 plugins {
-	id 'fabric-loom' version '0.4-SNAPSHOT'
-	id 'maven-publish'
+	id "fabric-loom" version "0.5-SNAPSHOT"
+	id "maven-publish"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -10,35 +10,39 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-minecraft {
-}
-
 repositories {
-    maven { url "https://minecraft.curseforge.com/api/maven"}
+    maven {
+		url = "https://minecraft.curseforge.com/api/maven"
+	}
 	jcenter()
-	maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
+	maven {
+		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
+	}
+	maven {
+		url = "https://maven.terraformersmc.com/releases"
+	}
 }
 
 dependencies {
-	//to change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_mappings}:v${project.tiny_version}"
-	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
+	// To change the versions see the gradle.properties file
+	minecraft("com.mojang:minecraft:${project.minecraft_version}")
+	mappings("net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_mappings}:v${project.tiny_version}")
+	modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
 
 	// Artifice
-	modImplementation "com.lettuce.fudge:artifice:${project.artifice_version}"
-	include "com.lettuce.fudge:artifice:${project.artifice_version}"
+	include(modImplementation("com.lettuce.fudge:artifice:${project.artifice_version}"))
 
 	// Jankson
-	modCompile "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
-	include "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
-	
-	// stuff for dev env
-	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
-    modImplementation ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") { exclude(module: 'ModMenu') }
+	include(modImplementation("io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"))
+
+	// Stuff for dev env
+	modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+    modImplementation("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
+		exclude(module: "modmenu")
+	}
 }
 
 processResources {
@@ -67,6 +71,11 @@ tasks.withType(JavaCompile) {
 task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier = "sources"
 	from sourceSets.main.allSource
+}
+
+tasks.withType(Wrapper) {
+	gradleVersion = "6.8.1"
+	distributionType = Wrapper.DistributionType.ALL
 }
 
 jar {

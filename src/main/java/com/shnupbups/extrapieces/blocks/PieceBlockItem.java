@@ -1,6 +1,6 @@
 package com.shnupbups.extrapieces.blocks;
 
-import com.shnupbups.extrapieces.register.ModItemGroups;
+import com.shnupbups.extrapieces.register.EPItemGroups;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.BlockItem;
@@ -33,6 +33,6 @@ public class PieceBlockItem extends BlockItem {
 
 	@Override
 	protected boolean isIn(ItemGroup group) {
-		return group.equals(ModItemGroups.getItemGroup(this.getPieceBlock().getType())) || group.equals(ItemGroup.SEARCH) || super.isIn(group);
+		return group.equals(EPItemGroups.getItemGroup(this.getPieceBlock().getType())) || group.equals(ItemGroup.SEARCH) || super.isIn(group);
 	}
 }

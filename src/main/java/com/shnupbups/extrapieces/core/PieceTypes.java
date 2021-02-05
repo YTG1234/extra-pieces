@@ -2,7 +2,7 @@ package com.shnupbups.extrapieces.core;
 
 import com.shnupbups.extrapieces.blocks.PieceBlock;
 import com.shnupbups.extrapieces.pieces.*;
-import com.shnupbups.extrapieces.register.ModConfigs;
+import com.shnupbups.extrapieces.register.EPConfig;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -30,16 +30,16 @@ public class PieceTypes {
 
 	public static void init() {
 		register(PieceTypes.BASE);
-		if(ModConfigs.stairs) register(PieceTypes.STAIRS);
-		if(ModConfigs.slabs) register(PieceTypes.SLAB);
-		if(ModConfigs.sidings) register(PieceTypes.SIDING);
-		if(ModConfigs.walls) register(PieceTypes.WALL);
-		if(ModConfigs.fences) register(PieceTypes.FENCE);
-		if(ModConfigs.fenceGates) register(PieceTypes.FENCE_GATE);
-		if(ModConfigs.posts) register(PieceTypes.POST);
-		if(ModConfigs.columns) register(PieceTypes.COLUMN);
-		if(ModConfigs.corners) register(PieceTypes.CORNER);
-		if(ModConfigs.layers) register(PieceTypes.LAYER);
+		if(EPConfig.stairs) register(PieceTypes.STAIRS);
+		if(EPConfig.slabs) register(PieceTypes.SLAB);
+		if(EPConfig.sidings) register(PieceTypes.SIDING);
+		if(EPConfig.walls) register(PieceTypes.WALL);
+		if(EPConfig.fences) register(PieceTypes.FENCE);
+		if(EPConfig.fenceGates) register(PieceTypes.FENCE_GATE);
+		if(EPConfig.posts) register(PieceTypes.POST);
+		if(EPConfig.columns) register(PieceTypes.COLUMN);
+		if(EPConfig.corners) register(PieceTypes.CORNER);
+		if(EPConfig.layers) register(PieceTypes.LAYER);
 	}
 
 	public static PieceType register(PieceType type) {
