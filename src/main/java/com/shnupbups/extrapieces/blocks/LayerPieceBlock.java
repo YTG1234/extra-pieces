@@ -36,6 +36,8 @@ import net.minecraft.world.explosion.Explosion;
 
 import java.util.Random;
 
+import static com.shnupbups.extrapieces.EPUtilities.*;
+
 @SuppressWarnings("deprecation")
 public class LayerPieceBlock extends Block implements Waterloggable, PieceBlock {
 	public static final IntProperty LAYERS;
@@ -68,7 +70,7 @@ public class LayerPieceBlock extends Block implements Waterloggable, PieceBlock 
 		return PieceTypes.LAYER;
 	}
 
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext entityContext_1) {
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
 		Direction dir = state.get(FACING);
 		int layers = state.get(LAYERS);
 		if(layers == 8) return VoxelShapes.fullCube();
@@ -88,15 +90,15 @@ public class LayerPieceBlock extends Block implements Waterloggable, PieceBlock 
 		} return VoxelShapes.empty();
 	}
 
-	public boolean hasSidedTransparency(BlockState blockState_1) {
+	public boolean hasSidedTransparency(BlockState state) {
 		return true;
 	}
 
-	public boolean canReplace(BlockState state, ItemPlacementContext itemPlacementContext_1) {
-		int int_1 = state.get(LAYERS);
-		if (itemPlacementContext_1.getStack().getItem() == this.asItem() && int_1 < 8) {
-			if (itemPlacementContext_1.canReplaceExisting()) {
-				return itemPlacementContext_1.getSide() == state.get(FACING);
+	public boolean canReplace(BlockState state, ItemPlacementContext itemPlacementContext) {
+		int layers = state.get(LAYERS);
+		if (itemPlacementContext.getStack().getItem() == this.asItem() && layers < 8) {
+			if (itemPlacementContext.canReplaceExisting()) {
+				return itemPlacementContext.getSide() == state.get(FACING);
 			} else {
 				return true;
 			}
@@ -104,57 +106,57 @@ public class LayerPieceBlock extends Block implements Waterloggable, PieceBlock 
 		return false;
 	}
 
-	public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
-		BlockPos blockPos_1 = itemPlacementContext_1.getBlockPos();
-		BlockState blockState_1 = itemPlacementContext_1.getWorld().getBlockState(blockPos_1);
-		if (blockState_1.getBlock() == this) {
-			int int_1 = blockState_1.get(LAYERS);
-			BlockState newState = blockState_1.with(LAYERS, Math.min(8, int_1 + 1));
-			if (int_1 + 1 >= 8) {
+	public BlockState getPlacementState(ItemPlacementContext itemPlacementContext) {
+		BlockPos pos = itemPlacementContext.getBlockPos();
+		BlockState state = itemPlacementContext.getWorld().getBlockState(pos);
+		if (state.getBlock() == this) {
+			int layers = state.get(LAYERS);
+			BlockState newState = state.with(LAYERS, Math.min(8, layers + 1));
+			if (layers + 1 >= 8) {
 				newState = newState.with(WATERLOGGED, false);
 			}
 			return newState;
 		} else {
-			FluidState fluidState_1 = itemPlacementContext_1.getWorld().getFluidState(blockPos_1);
-			return this.getDefaultState().with(WATERLOGGED, fluidState_1.getFluid() == Fluids.WATER).with(FACING, itemPlacementContext_1.getSide());
+			FluidState fluidState = itemPlacementContext.getWorld().getFluidState(pos);
+			return this.getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER).with(FACING, itemPlacementContext.getSide());
 		}
 	}
 
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateFactory$Builder_1) {
-		stateFactory$Builder_1.add(LAYERS);
-		stateFactory$Builder_1.add(WATERLOGGED);
-		stateFactory$Builder_1.add(FACING);
+	protected void appendProperties(StateManager.Builder<Block, BlockState> stateFactory$Builder) {
+		stateFactory$Builder.add(LAYERS);
+		stateFactory$Builder.add(WATERLOGGED);
+		stateFactory$Builder.add(FACING);
 	}
 
-	public FluidState getFluidState(BlockState blockState_1) {
-		return blockState_1.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(blockState_1);
+	public FluidState getFluidState(BlockState state) {
+		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
 
-	public boolean tryFillWithFluid(WorldAccess worldAccess_1, BlockPos blockPos_1, BlockState blockState_1, FluidState fluidState_1) {
-		return blockState_1.get(LAYERS) < 8 && Waterloggable.super.tryFillWithFluid(worldAccess_1, blockPos_1, blockState_1, fluidState_1);
+	public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+		return state.get(LAYERS) < 8 && Waterloggable.super.tryFillWithFluid(world, pos, state, fluidState);
 	}
 
-	public boolean canFillWithFluid(BlockView blockView_1, BlockPos blockPos_1, BlockState blockState_1, Fluid fluid_1) {
-		return blockState_1.get(LAYERS) < 8 && Waterloggable.super.canFillWithFluid(blockView_1, blockPos_1, blockState_1, fluid_1);
+	public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+		return state.get(LAYERS) < 8 && Waterloggable.super.canFillWithFluid(world, pos, state, fluid);
 	}
 
 	@Environment(EnvType.CLIENT)
 	@Override
-	public void randomDisplayTick(BlockState blockState_1, World world_1, BlockPos blockPos_1, Random random_1) {
-		super.randomDisplayTick(blockState_1, world_1, blockPos_1, random_1);
-		this.getBase().randomDisplayTick(this.getBaseState(), world_1, blockPos_1, random_1);
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+		super.randomDisplayTick(state, world, pos, random);
+		this.getBase().randomDisplayTick(this.getBaseState(), world, pos, random);
 	}
 
 	@Override
-	public void onBlockBreakStart(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1) {
-		super.onBlockBreakStart(blockState_1, world_1, blockPos_1, playerEntity_1);
-		this.getBaseState().onBlockBreakStart(world_1, blockPos_1, playerEntity_1);
+	public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+		super.onBlockBreakStart(state, world, pos, player);
+		this.getBaseState().onBlockBreakStart(world, pos, player);
 	}
 
 	@Override
-	public void onBroken(WorldAccess worldAccess_1, BlockPos blockPos_1, BlockState blockState_1) {
-		super.onBroken(worldAccess_1, blockPos_1, blockState_1);
-		this.getBase().onBroken(worldAccess_1, blockPos_1, blockState_1);
+	public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
+		super.onBroken(world, pos, state);
+		this.getBase().onBroken(world, pos, state);
 	}
 
 	@Override
@@ -163,42 +165,42 @@ public class LayerPieceBlock extends Block implements Waterloggable, PieceBlock 
 	}
 
 	@Override
-	public void onBlockAdded(BlockState blockState_1, World world_1, BlockPos blockPos_1, BlockState blockState_2, boolean boolean_1) {
-		super.onBlockAdded(blockState_1, world_1, blockPos_1, blockState_2, boolean_1);
-		if (blockState_1.getBlock() != blockState_2.getBlock()) {
-			this.getBase().getDefaultState().neighborUpdate(world_1, blockPos_1, Blocks.AIR, blockPos_1, false);
-			this.getBase().getDefaultState().onBlockAdded(world_1, blockPos_1, blockState_2, false);
+	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState state_2, boolean notify) {
+		super.onBlockAdded(state, world, pos, state_2, notify);
+		if (state.getBlock() != state_2.getBlock()) {
+			this.getBase().getDefaultState().neighborUpdate(world, pos, Blocks.AIR, pos, false);
+			this.getBase().getDefaultState().onBlockAdded(world, pos, state_2, false);
 		}
 	}
 
 	@Override
-	public void onStateReplaced(BlockState blockState_1, World world_1, BlockPos blockPos_1, BlockState blockState_2, boolean boolean_1) {
-		super.onStateReplaced(blockState_1, world_1, blockPos_1, blockState_2, boolean_1);
-		if (blockState_1.getBlock() != blockState_2.getBlock()) {
-			this.getBaseState().onStateReplaced(world_1, blockPos_1, blockState_2, boolean_1);
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState state_2, boolean moved) {
+		super.onStateReplaced(state, world, pos, state_2, moved);
+		if (state.getBlock() != state_2.getBlock()) {
+			this.getBaseState().onStateReplaced(world, pos, state_2, moved);
 		}
 	}
 
 	@Override
-	public void onSteppedOn(World world_1, BlockPos blockPos_1, Entity entity_1) {
-		super.onSteppedOn(world_1, blockPos_1, entity_1);
+	public void onSteppedOn(World world, BlockPos pos, Entity entity) {
+		super.onSteppedOn(world, pos, entity);
 		try {
-			this.getBase().onSteppedOn(world_1, blockPos_1, entity_1);
+			this.getBase().onSteppedOn(world, pos, entity);
 		} catch (IllegalArgumentException ignored) {
-			ExtraPieces.debugLog("Caught an exception in onSteppedOn for "+this.getPieceString());
+			debugLog("Caught an exception in onSteppedOn for "+this.getPieceString());
 		}
 	}
 
 	@Override
-	public void scheduledTick(BlockState blockState_1, ServerWorld world_1, BlockPos blockPos_1, Random random_1) {
-		super.scheduledTick(blockState_1, world_1, blockPos_1, random_1);
-		this.getBase().scheduledTick(this.getBaseState(), world_1, blockPos_1, random_1);
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		super.scheduledTick(state, world, pos, random);
+		this.getBase().scheduledTick(this.getBaseState(), world, pos, random);
 	}
 
 	@Override
-	public ActionResult onUse(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
-		ActionResult a = super.onUse(blockState_1, world_1, blockPos_1, playerEntity_1, hand_1, blockHitResult_1);
-		if(a.isAccepted() || this.getBaseState().onUse(world_1, playerEntity_1, hand_1, blockHitResult_1).isAccepted()) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		ActionResult a = super.onUse(state, world, pos, player, hand, hit);
+		if(a.isAccepted() || this.getBaseState().onUse(world, player, hand, hit).isAccepted()) {
 			return ActionResult.SUCCESS;
 		} else {
 			return ActionResult.PASS;
@@ -206,20 +208,20 @@ public class LayerPieceBlock extends Block implements Waterloggable, PieceBlock 
 	}
 
 	@Override
-	public void onDestroyedByExplosion(World world_1, BlockPos blockPos_1, Explosion explosion_1) {
-		super.onDestroyedByExplosion(world_1, blockPos_1, explosion_1);
-		this.getBase().onDestroyedByExplosion(world_1, blockPos_1, explosion_1);
+	public void onDestroyedByExplosion(World world, BlockPos pos, Explosion explosion) {
+		super.onDestroyedByExplosion(world, pos, explosion);
+		this.getBase().onDestroyedByExplosion(world, pos, explosion);
 	}
 	
 	@Override
-	public boolean emitsRedstonePower(BlockState blockState_1) {
-		return super.emitsRedstonePower(blockState_1) || this.getBaseState().emitsRedstonePower();
+	public boolean emitsRedstonePower(BlockState state) {
+		return super.emitsRedstonePower(state) || this.getBaseState().emitsRedstonePower();
 	}
 	
 	@Override
-	public int getWeakRedstonePower(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, Direction direction_1) {
-		float power = (float)this.getBaseState().getWeakRedstonePower(blockView_1, blockPos_1, direction_1);
-		power = (power / 8) * blockState_1.get(LAYERS);
+	public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
+		float power = (float)this.getBaseState().getWeakRedstonePower(world, pos, direction);
+		power = (power / 8) * state.get(LAYERS);
 		return Math.round(power);
 	}
 }

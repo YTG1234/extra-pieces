@@ -12,12 +12,11 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Language;
 
 public class PieceBlockItem extends BlockItem {
-
 	private final PieceBlock pb;
 
-	public PieceBlockItem(PieceBlock block_1, Item.Settings item$Settings_1) {
-		super(block_1.getBlock(), item$Settings_1);
-		pb = block_1;
+	public PieceBlockItem(PieceBlock block, Item.Settings settings) {
+		super(block.getBlock(), settings);
+		pb = block;
 	}
 
 	public PieceBlock getPieceBlock() {
